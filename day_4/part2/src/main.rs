@@ -13,10 +13,14 @@ fn main() {
         let temp: Vec<&str> = line.split(&['-', ','][..]).collect();
         ranges.push((temp[0].parse::<i32>().unwrap(), temp[1].parse::<i32>().unwrap(), temp[2].parse::<i32>().unwrap(), temp[3].parse::<i32>().unwrap()));
     }
-
-    let mut value: u32 = 0;
+    
+    let mut values: i32 = 0;
     for set in ranges {
-        
+        if set.1 == set.2 {
+            values += 1;
+        } else if !(set.1 < set.2 || set.3 < set.0) {
+            values += 1;
+        }
     }
-    println!("{}", value);
+    println!("{:?}", values);
 }
