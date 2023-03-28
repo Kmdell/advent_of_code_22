@@ -1,5 +1,17 @@
 use std::fs;
 
+fn get_pos(str: &str) -> u64 {
+    let mut pos: u64 = 0;
+    for elem in str.chars() {
+        if elem >= 'a' {
+            pos |= 1 << ((elem as u32) - 96);
+        } else {
+            pos |= 1 << ((elem as u32) - 38);
+        }
+    }
+    pos
+}
+
 fn main() {
     // get the data from the file
     let file: String = fs::read_to_string("rucksack.txt").unwrap();
@@ -17,25 +29,8 @@ fn main() {
     // 
     let mut value: u32 = 0;
     for line in split_file {
-        let mut left: u64 = 0;
-        let mut right: u64 = 0;
-        // get the chars and iterator through filling value with the amount to the left the ascii is 
-        for elem in line.0.chars() {
-            if elem >= 'a' {
-                left |= 1 << ((elem as u32) - 96);
-            } else {
-                left |= 1 << ((elem as u32) - 38);
-            }
-        }
-        for elem in line.1.chars() {
-            if elem >= 'a' {
-                right |= 1 << ((elem as u32) - 96);
-            } else {
-                right |= 1 << ((elem as u32) - 38);
-            }
-        }
         // and together to find the char that is the same for both sides
-        let mut temp: u64 = left & right;
+        let mut temp: u64 = get_pos(line.0) & get_pos(line.1);
         while temp & 1 == 0 {
             value += 1;
             temp >>= 1;
