@@ -43,7 +43,6 @@ fn main() {
             (temp[1].parse::<usize>().unwrap(), temp[3].parse::<usize>().unwrap(), temp[5].parse::<usize>().unwrap())
         }).collect();
 
-    println!("{:?}", mov_instr);
     for inst in &mov_instr {
         vec_cargo = move_stacks(inst.0, inst.1, inst.2, vec_cargo);
     }
